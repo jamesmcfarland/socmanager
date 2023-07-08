@@ -1,3 +1,4 @@
+import { DataTableDemo } from "@/components/datatable";
 import { ModeToggle } from "@/components/themetoggle";
 import { UserButton, UserProfile } from "@clerk/nextjs";
 
@@ -13,6 +14,7 @@ const Dashboard = ({ params }: { params: { id: string } }) => {
           <UserButton />
         </div>
       </nav>
+      <DataTableDemo />
     </div>
   );
 };
