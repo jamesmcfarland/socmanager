@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import { Button } from "../ui/button";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { AddEditUserDialog } from "./add-edit-user";
 
 const DropdownContainer = () => {

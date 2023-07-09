@@ -1,6 +1,6 @@
 import { AddEditUserDialog } from "./add-edit-user";
-import { Button } from "./ui/button";
-import { Dialog, DialogTrigger } from "./ui/dialog";
+import { Button } from "../ui/button";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 
 const AddUserDialog = ({
   buttonVariant,

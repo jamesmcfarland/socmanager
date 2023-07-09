@@ -39,9 +39,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AddEditUserDialog } from "./add-edit-user";
-import AddUserDialog from "./add-user-dialog";
-import DropdownContainer from "./dropdown-container";
+import AddUserDialog from "./memberdialog/add-user-dialog";
+import DropdownContainer from "./memberdialog/dropdown-container";
 
 const data: Member[] = [
   {

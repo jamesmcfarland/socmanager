@@ -17,16 +17,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "../ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 import * as z from "zod";
-import QuickFormInput from "./quick-form-input";
+import QuickFormInput from "../quick-form-input";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
