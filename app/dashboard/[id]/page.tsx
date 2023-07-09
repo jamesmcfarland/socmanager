@@ -1,6 +1,6 @@
 import { DataTableDemo } from "@/components/datatable";
 import { ModeToggle } from "@/components/theming/themetoggle";
-import { UserButton, UserProfile } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 
 const Dashboard = ({ params }: { params: { id: string } }) => {
   return (
