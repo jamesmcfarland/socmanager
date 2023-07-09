@@ -40,6 +40,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AddEditUserDialog } from "./add-edit-user";
+import AddUserDialog from "./add-user-dialog";
+import DropdownContainer from "./dropdown-container";
 
 const data: Member[] = [
   {
@@ -176,27 +178,7 @@ export const columns: ColumnDef<Member>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <DropdownContainer />;
     },
   },
 ];
@@ -266,7 +248,7 @@ export function DataTableDemo() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <AddEditUserDialog type="add" buttonVariant="default" />
+        <AddUserDialog buttonVariant="default" />
       </div>
       <div className="rounded-md border">
         <Table>

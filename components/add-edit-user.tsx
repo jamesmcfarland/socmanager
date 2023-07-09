@@ -8,8 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -27,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import Link from "next/link";
 import * as z from "zod";
 import QuickFormInput from "./quick-form-input";
 
@@ -51,13 +48,20 @@ const FormSchema = z.object({
     message: "Please enter a valid email address.",
   }),
 });
-export function AddEditUserDialog({
-  type,
-  buttonVariant,
-}: {
+
+interface addEditUserPropsCommon {
   type: "add" | "edit";
   buttonVariant?: "outline" | "default";
-}) {
+  userId?: string;
+  dropdown?: boolean;
+}
+
+export function AddEditUserDialog({
+  type,
+  buttonVariant = "default",
+  userId,
+  dropdown = false,
+}: addEditUserPropsCommon) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -100,86 +104,78 @@ export function AddEditUserDialog({
     // }
   }
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant={buttonVariant}>
-          {" "}
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>
           {type.substring(0, 1).toUpperCase() + type.substring(1)} member
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>
-            {type.substring(0, 1).toUpperCase() + type.substring(1)} member
-          </DialogTitle>
-          <DialogDescription>
-            {type === "add"
-              ? "Add a new member below, hit save when you're done"
-              : "  Make changes here. Click save when you&apos;re done."}
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-2">
-              <QuickFormInput
-                control={form.control}
-                label="Name"
-                placeholder="John Doe"
-                fieldName="name"
-              />
-              <QuickFormInput
-                control={form.control}
-                label="Email"
-                placeholder="joe@bloggs.com"
-                fieldName="email"
-              />
-              <QuickFormInput
-                control={form.control}
-                label="Student Number"
-                placeholder="12345678"
-                fieldName="studentNumber"
-              />
-              <QuickFormInput
-                control={form.control}
-                label="Course"
-                placeholder="Software Engineering"
-                fieldName="course"
-              />
-              <FormField
-                control={form.control}
-                name="membershipType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Membership type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="student">Student</SelectItem>
-                        <SelectItem value="associate">Associate</SelectItem>
-                      </SelectContent>
-                    </Select>
+        </DialogTitle>
+        <DialogDescription>
+          {type === "add"
+            ? "Add a new member below, hit save when you're done"
+            : "  Make changes here. Click save when you're done."}
+        </DialogDescription>
+      </DialogHeader>
+      <div className="grid gap-4 py-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-2">
+            <QuickFormInput
+              control={form.control}
+              label="Name"
+              placeholder="John Doe"
+              fieldName="name"
+            />
+            <QuickFormInput
+              control={form.control}
+              label="Email"
+              placeholder="joe@bloggs.com"
+              fieldName="email"
+            />
+            <QuickFormInput
+              control={form.control}
+              label="Student Number"
+              placeholder="12345678"
+              fieldName="studentNumber"
+            />
+            <QuickFormInput
+              control={form.control}
+              label="Course"
+              placeholder="Software Engineering"
+              fieldName="course"
+            />
+            <FormField
+              control={form.control}
+              name="membershipType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Membership type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="student">Student</SelectItem>
+                      <SelectItem value="associate">Associate</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="flex justify-end pt-2">
-                <Button type="submit">
-                  {type === "edit" ? "Save changes" : "Add member"}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
-      </DialogContent>
-    </Dialog>
+            <div className="flex justify-end pt-2">
+              <Button type="submit">
+                {type === "edit" ? "Save changes" : "Add member"}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </DialogContent>
   );
 }
