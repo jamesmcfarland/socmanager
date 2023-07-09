@@ -4,7 +4,7 @@ import { UserButton, UserProfile } from "@clerk/nextjs";
 
 const Dashboard = ({ params }: { params: { id: string } }) => {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col mx-4">
       <nav className="flex flex-row justify-between py-2 px-4  border-b-2 items-center">
         <h2>socmanager</h2>
         <h1>Dashboard</h1>

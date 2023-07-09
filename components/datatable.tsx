@@ -39,6 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AddEditUserDialog } from "./add-edit-user";
 
 const data: Member[] = [
   {
@@ -265,6 +266,7 @@ export function DataTableDemo() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <AddEditUserDialog type="add" buttonVariant="default" />
       </div>
       <div className="rounded-md border">
         <Table>
