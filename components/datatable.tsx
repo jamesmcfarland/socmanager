@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-} from "@radix-ui/react-icons";
+import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -170,9 +167,7 @@ export const columns: ColumnDef<Member>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
+    cell: () => {
       return <DropdownContainer />;
     },
   },
