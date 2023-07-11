@@ -49,14 +49,15 @@ const FormSchema = z.object({
 interface addEditUserPropsCommon {
   type: "add" | "edit";
   buttonVariant?: "outline" | "default";
-  userId?: string;
+  userData?: any;
   dropdown?: boolean;
+  id?: string;
 }
 
 export function AddEditUserDialog({
   type,
   buttonVariant = "default",
-  userId,
+  userData,
   dropdown = false,
 }: addEditUserPropsCommon) {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -120,24 +121,28 @@ export function AddEditUserDialog({
               label="Name"
               placeholder="John Doe"
               fieldName="name"
+              existingValue={userData?.name}
             />
             <QuickFormInput
               control={form.control}
               label="Email"
               placeholder="joe@bloggs.com"
               fieldName="email"
+              existingValue={userData?.email}
             />
             <QuickFormInput
               control={form.control}
               label="Student Number"
               placeholder="12345678"
               fieldName="studentNumber"
+              existingValue={userData?.universitystudentnumber}
             />
             <QuickFormInput
               control={form.control}
               label="Course"
               placeholder="Software Engineering"
               fieldName="course"
+              existingValue={userData?.universitycourse}
             />
             <FormField
               control={form.control}

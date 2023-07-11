@@ -12,6 +12,7 @@ interface QuickFormInputProps {
   label: string;
   placeholder: string;
   fieldName: string;
+  existingValue?: string;
 }
 
 const QuickFormInput = ({
@@ -19,6 +20,7 @@ const QuickFormInput = ({
   label,
   placeholder,
   fieldName,
+  existingValue,
 }: QuickFormInputProps) => {
   return (
     <FormField
@@ -28,7 +30,11 @@ const QuickFormInput = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input
+              placeholder={placeholder}
+              {...field}
+              defaultValue={existingValue}
+            />
           </FormControl>
 
           <FormMessage />

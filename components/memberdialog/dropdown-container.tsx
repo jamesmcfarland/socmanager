@@ -11,7 +11,7 @@ import {
 } from "../ui/dropdown-menu";
 import { AddEditUserDialog } from "./add-edit-user";
 
-const DropdownContainer = () => {
+const DropdownContainer = ({ userData }: { userData: any }) => {
   return (
     <Dialog>
       <DropdownMenu>
@@ -24,7 +24,7 @@ const DropdownContainer = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DialogTrigger asChild>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
+            <DropdownMenuItem>Edit user </DropdownMenuItem>
           </DialogTrigger>
 
           <DropdownMenuSeparator />
@@ -32,7 +32,7 @@ const DropdownContainer = () => {
           <DropdownMenuItem>View payment details</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <AddEditUserDialog type="edit" userId="1" />
+      <AddEditUserDialog type="edit" userData={userData} />
     </Dialog>
   );
 };

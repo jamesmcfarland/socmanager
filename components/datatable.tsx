@@ -37,46 +37,6 @@ import {
   universityColumns,
 } from "./utils/datatable-defs/defs";
 
-// const data: Member[] = [
-//   {
-//     id: "m5gr84i9",
-//     name: "Ken",
-//     email: "a@a.com",
-//     studentNumber: "1234568",
-//     joinDate: "2021-09-01",
-//     membershipType: "student",
-//     year: "1",
-//     course: "Computer Science",
-//   },
-//   {
-//     id: "3u1reuv4",
-//     name: "Abe",
-//     email: "b@a.com",
-//     studentNumber: "1234569",
-//     joinDate: "2021-09-01",
-//     membershipType: "student",
-//     year: "1",
-//     course: "Computer Science",
-//   },
-//   {
-//     id: "derv1ws0",
-//     name: "Monserrat",
-//     email: "c@a.com",
-//     studentNumber: "1234566",
-//     joinDate: "2021-09-01",
-//     membershipType: "student",
-//     year: "1",
-//     course: "Software Engineering",
-//   },
-// ];
-
-// export type Payment = {
-//   id: string;
-//   amount: number;
-//   status: "pending" | "processing" | "success" | "failed";
-//   email: string;
-// };
-
 export function DataTableDemo({ data, type }: { data: any; type: any }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

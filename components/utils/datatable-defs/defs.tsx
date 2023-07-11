@@ -119,8 +119,8 @@ export const universityColumns: ColumnDef<any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      return <DropdownContainer />;
+    cell: ({ row }) => {
+      return <DropdownContainer userData={row.original} />;
     },
   },
 ];
@@ -195,8 +195,8 @@ export const officeColumns: ColumnDef<any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      return <DropdownContainer />;
+    cell: ({ row }) => {
+      return <DropdownContainer userData={row.original} />;
     },
   },
 ];
@@ -263,8 +263,8 @@ export const communityColumns: ColumnDef<any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      return <DropdownContainer />;
+    cell: ({ row }) => {
+      return <DropdownContainer userData={row.original} />;
     },
   },
 ];
