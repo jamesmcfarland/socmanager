@@ -35,38 +35,38 @@ import {
 import AddUserDialog from "./memberdialog/add-user-dialog";
 import DropdownContainer from "./memberdialog/dropdown-container";
 
-const data: Member[] = [
-  {
-    id: "m5gr84i9",
-    name: "Ken",
-    email: "a@a.com",
-    studentNumber: "1234568",
-    joinDate: "2021-09-01",
-    membershipType: "student",
-    year: "1",
-    course: "Computer Science",
-  },
-  {
-    id: "3u1reuv4",
-    name: "Abe",
-    email: "b@a.com",
-    studentNumber: "1234569",
-    joinDate: "2021-09-01",
-    membershipType: "student",
-    year: "1",
-    course: "Computer Science",
-  },
-  {
-    id: "derv1ws0",
-    name: "Monserrat",
-    email: "c@a.com",
-    studentNumber: "1234566",
-    joinDate: "2021-09-01",
-    membershipType: "student",
-    year: "1",
-    course: "Software Engineering",
-  },
-];
+// const data: Member[] = [
+//   {
+//     id: "m5gr84i9",
+//     name: "Ken",
+//     email: "a@a.com",
+//     studentNumber: "1234568",
+//     joinDate: "2021-09-01",
+//     membershipType: "student",
+//     year: "1",
+//     course: "Computer Science",
+//   },
+//   {
+//     id: "3u1reuv4",
+//     name: "Abe",
+//     email: "b@a.com",
+//     studentNumber: "1234569",
+//     joinDate: "2021-09-01",
+//     membershipType: "student",
+//     year: "1",
+//     course: "Computer Science",
+//   },
+//   {
+//     id: "derv1ws0",
+//     name: "Monserrat",
+//     email: "c@a.com",
+//     studentNumber: "1234566",
+//     joinDate: "2021-09-01",
+//     membershipType: "student",
+//     year: "1",
+//     course: "Software Engineering",
+//   },
+// ];
 
 // export type Payment = {
 //   id: string;
@@ -74,6 +74,19 @@ const data: Member[] = [
 //   status: "pending" | "processing" | "success" | "failed";
 //   email: string;
 // };
+
+const formatYear = (year: number) => {
+  switch (year) {
+    case 1:
+      return "1st";
+    case 2:
+      return "2nd";
+    case 3:
+      return "3rd";
+    default:
+      return `${year}th`;
+  }
+};
 
 export type Member = {
   id: string;
@@ -138,29 +151,35 @@ export const columns: ColumnDef<Member>[] = [
   },
 
   {
-    accessorKey: "studentNumber",
+    accessorKey: "universitystudentnumber",
     header: "Student number",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("studentNumber")}</div>
+      <div className="capitalize">
+        {row.getValue("universitystudentnumber")}
+      </div>
     ),
   },
   {
-    accessorKey: "course",
+    accessorKey: "universitycourse",
     header: "Course",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("course")}</div>
+      <div className="capitalize">{row.getValue("universitycourse")}</div>
     ),
   },
   {
-    accessorKey: "year",
+    accessorKey: "universityyear",
     header: "Year",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("year")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {formatYear(row.getValue("universityyear"))}
+      </div>
+    ),
   },
   {
-    accessorKey: "membershipType",
+    accessorKey: "universitytype",
     header: "Membership type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("membershipType")}</div>
+      <div className="capitalize">{row.getValue("universitytype")}</div>
     ),
   },
 
@@ -173,7 +192,7 @@ export const columns: ColumnDef<Member>[] = [
   },
 ];
 
-export function DataTableDemo() {
+export function DataTableDemo({ data }: { data: any }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
