@@ -11,7 +11,7 @@ const Dashboard = async ({ params }: { params: { id: string } }) => {
   const { data, error } = await supabase.functions.invoke(
     "getMembersFromOrgId",
     {
-      body: { id: 1 },
+      body: { id: params.id },
     }
   );
 
