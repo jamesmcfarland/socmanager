@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -16,7 +15,6 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -33,7 +31,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AddUserDialog from "./memberdialog/add-user-dialog";
-import DropdownContainer from "./memberdialog/dropdown-container";
+import {
+  communityColumns,
+  officeColumns,
+  universityColumns,
+} from "./utils/datatable-defs/defs";
 
 // const data: Member[] = [
 //   {
@@ -75,124 +77,7 @@ import DropdownContainer from "./memberdialog/dropdown-container";
 //   email: string;
 // };
 
-const formatYear = (year: number) => {
-  switch (year) {
-    case 1:
-      return "1st";
-    case 2:
-      return "2nd";
-    case 3:
-      return "3rd";
-    default:
-      return `${year}th`;
-  }
-};
-
-export type Member = {
-  id: string;
-  name: string;
-  email: string;
-  studentNumber: string;
-  joinDate: string;
-  membershipType: "student" | "associate";
-  year: string;
-  course: string;
-};
-
-export const columns: ColumnDef<Member>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-
-  {
-    accessorKey: "universitystudentnumber",
-    header: "Student number",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        {row.getValue("universitystudentnumber")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "universitycourse",
-    header: "Course",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("universitycourse")}</div>
-    ),
-  },
-  {
-    accessorKey: "universityyear",
-    header: "Year",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        {formatYear(row.getValue("universityyear"))}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "universitytype",
-    header: "Membership type",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("universitytype")}</div>
-    ),
-  },
-
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: () => {
-      return <DropdownContainer />;
-    },
-  },
-];
-
-export function DataTableDemo({ data }: { data: any }) {
+export function DataTableDemo({ data, type }: { data: any; type: any }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -200,6 +85,13 @@ export function DataTableDemo({ data }: { data: any }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const columns =
+    type === "university"
+      ? universityColumns
+      : type === "office"
+      ? officeColumns
+      : communityColumns;
 
   const table = useReactTable({
     data,
@@ -299,7 +191,7 @@ export function DataTableDemo({ data }: { data: any }) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={universityColumns.length}
                   className="h-24 text-center"
                 >
                   No results.
