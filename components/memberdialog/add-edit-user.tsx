@@ -29,11 +29,11 @@ import FormSwitcher from "./forms/formSwitcher";
 
 interface props {
   type: "add" | "edit";
-  userData?: UserData;
+  userData?: any;
   organisationType: string;
   dropdown?: boolean;
+  buttonVariant?: string;
   id?: string;
-  organisationType: string;
 }
 
 export function AddEditUserDialog({
@@ -42,11 +42,7 @@ export function AddEditUserDialog({
   userData,
   dropdown = false,
   organisationType,
-}: addEditUserPropsCommon) {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
-
+}: props) {
   // const form = useForm<z.infer<typeof formSchema>>({
   //   resolver: zodResolver(formSchema),
   // });
