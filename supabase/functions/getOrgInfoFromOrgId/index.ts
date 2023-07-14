@@ -17,7 +17,7 @@ serve(async (_req) => {
     try {
       // Run a query
       const result =
-        await connection.queryObject`SELECT organisationname FROM organisations WHERE id = ${id}`;
+        await connection.queryObject`SELECT organisationname, organisationtype FROM organisations WHERE id = ${id}`;
       const animals = result.rows; // [{ id: 1, name: "Lion" }, ...]
       console.log(animals);
 

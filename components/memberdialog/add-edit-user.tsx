@@ -24,6 +24,9 @@ import {
 } from "../ui/select";
 import * as z from "zod";
 import QuickFormInput from "../quick-form-input";
+import UniversityForm from "./forms/universityform";
+import OfficeForm from "./forms/officeform";
+import FormSwitcher from "./forms/formSwitcher";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -52,6 +55,7 @@ interface addEditUserPropsCommon {
   userData?: any;
   dropdown?: boolean;
   id?: string;
+  organisationType: string;
 }
 
 export function AddEditUserDialog({
@@ -59,6 +63,7 @@ export function AddEditUserDialog({
   buttonVariant = "default",
   userData,
   dropdown = false,
+  organisationType,
 }: addEditUserPropsCommon) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -105,7 +110,8 @@ export function AddEditUserDialog({
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
         <DialogTitle>
-          {type.substring(0, 1).toUpperCase() + type.substring(1)} member
+          {type.substring(0, 1).toUpperCase() + type.substring(1)} member (
+          {organisationType})
         </DialogTitle>
         <DialogDescription>
           {type === "add"
@@ -114,69 +120,11 @@ export function AddEditUserDialog({
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-2">
-            <QuickFormInput
-              control={form.control}
-              label="Name"
-              placeholder="John Doe"
-              fieldName="name"
-              existingValue={userData?.name}
-            />
-            <QuickFormInput
-              control={form.control}
-              label="Email"
-              placeholder="joe@bloggs.com"
-              fieldName="email"
-              existingValue={userData?.email}
-            />
-            <QuickFormInput
-              control={form.control}
-              label="Student Number"
-              placeholder="12345678"
-              fieldName="studentNumber"
-              existingValue={userData?.universitystudentnumber}
-            />
-            <QuickFormInput
-              control={form.control}
-              label="Course"
-              placeholder="Software Engineering"
-              fieldName="course"
-              existingValue={userData?.universitycourse}
-            />
-            <FormField
-              control={form.control}
-              name="membershipType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Membership type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="student">Student</SelectItem>
-                      <SelectItem value="associate">Associate</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex justify-end pt-2">
-              <Button type="submit">
-                {type === "edit" ? "Save changes" : "Add member"}
-              </Button>
-            </div>
-          </form>
-        </Form>
+        <FormSwitcher
+          userData={userData}
+          organisationType={organisationType}
+          type={type}
+        />
       </div>
     </DialogContent>
   );
