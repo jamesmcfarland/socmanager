@@ -37,7 +37,13 @@ import {
   universityColumns,
 } from "./utils/datatable-defs/defs";
 
-export function DataTableDemo({ data, type }: { data: any; type: any }) {
+export function DataTableDemo({
+  data,
+  organisationType,
+}: {
+  data: any;
+  organisationType: any;
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -47,9 +53,9 @@ export function DataTableDemo({ data, type }: { data: any; type: any }) {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const columns =
-    type === "university"
+    organisationType === "university"
       ? universityColumns
-      : type === "office"
+      : organisationType === "office"
       ? officeColumns
       : communityColumns;
 
@@ -109,7 +115,10 @@ export function DataTableDemo({ data, type }: { data: any; type: any }) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <AddUserDialog buttonVariant="default" organisationType={type} />
+        <AddUserDialog
+          buttonVariant="default"
+          organisationType={organisationType}
+        />
       </div>
       <div className="rounded-md border">
         <Table>

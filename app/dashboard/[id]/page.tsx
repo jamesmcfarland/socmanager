@@ -8,15 +8,18 @@ import { cookies } from "next/headers";
 const Dashboard = async ({ params }: { params: { id: string } }) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.functions.invoke(
-    "getOrgNameFromOrgId",
+    "getOrgInfoFromOrgId",
     {
       body: { id: params.id },
     }
   );
   let organisationName;
+  let organisationType;
   if (!error) {
     if (data.length) {
+      console.log(data);
       organisationName = data[0].organisationname;
+      organisationType = data[0].organisationtype;
     }
   }
 
@@ -34,7 +37,7 @@ const Dashboard = async ({ params }: { params: { id: string } }) => {
         </div>
       </nav>
 
-      <DataTableHandler id={params.id} />
+      <DataTableHandler id={params.id} organisationType={organisationType} />
     </div>
   );
 };

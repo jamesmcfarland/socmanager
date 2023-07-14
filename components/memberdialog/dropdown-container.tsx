@@ -11,7 +11,13 @@ import {
 } from "../ui/dropdown-menu";
 import { AddEditUserDialog } from "./add-edit-user";
 
-const DropdownContainer = ({ userData }: { userData: any }) => {
+const DropdownContainer = ({
+  userData,
+  organisationType,
+}: {
+  userData: any;
+  organisationType: string;
+}) => {
   return (
     <Dialog>
       <DropdownMenu>
@@ -32,7 +38,11 @@ const DropdownContainer = ({ userData }: { userData: any }) => {
           <DropdownMenuItem>View payment details</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <AddEditUserDialog type="edit" userData={userData} />
+      <AddEditUserDialog
+        type="edit"
+        userData={userData}
+        organisationType={organisationType}
+      />
     </Dialog>
   );
 };

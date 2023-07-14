@@ -4,8 +4,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import FormHandler from "./forms/formHandler";
-import { DefaultUserData, UserData } from "../types/UserData";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import * as z from "zod";
+import QuickFormInput from "../quick-form-input";
+import UniversityForm from "./forms/universityform";
+import OfficeForm from "./forms/officeform";
+import FormSwitcher from "./forms/formSwitcher";
 
 interface props {
   type: "add" | "edit";
@@ -13,10 +33,19 @@ interface props {
   organisationType: string;
   dropdown?: boolean;
   id?: string;
+  organisationType: string;
 }
 
-export function AddEditUserDialog({ type, userData, organisationType }: props) {
-  userData = userData || DefaultUserData();
+export function AddEditUserDialog({
+  type,
+  buttonVariant = "default",
+  userData,
+  dropdown = false,
+  organisationType,
+}: addEditUserPropsCommon) {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
 
   // const form = useForm<z.infer<typeof formSchema>>({
   //   resolver: zodResolver(formSchema),
@@ -64,7 +93,8 @@ export function AddEditUserDialog({ type, userData, organisationType }: props) {
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
         <DialogTitle>
-          {type.substring(0, 1).toUpperCase() + type.substring(1)} member
+          {type.substring(0, 1).toUpperCase() + type.substring(1)} member (
+          {organisationType})
         </DialogTitle>
         <DialogDescription>
           {type === "add"
@@ -72,11 +102,13 @@ export function AddEditUserDialog({ type, userData, organisationType }: props) {
             : "  Make changes here. Click save when you're done."}
         </DialogDescription>
       </DialogHeader>
-      <FormHandler
-        type={type}
-        userData={userData}
-        organisationType={organisationType}
-      />
+      <div className="grid gap-4 py-4">
+        <FormSwitcher
+          userData={userData}
+          organisationType={organisationType}
+          type={type}
+        />
+      </div>
     </DialogContent>
   );
 }
