@@ -109,7 +109,7 @@ export function DataTableDemo({ data, type }: { data: any; type: any }) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <AddUserDialog buttonVariant="default" />
+        <AddUserDialog buttonVariant="default" organisationType={type} />
       </div>
       <div className="rounded-md border">
         <Table>

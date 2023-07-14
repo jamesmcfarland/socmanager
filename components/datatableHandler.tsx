@@ -14,9 +14,6 @@ const DataTableHandler = async ({ id }: { id: any }) => {
   if (error) {
     console.warn(error);
   }
-  if (data) {
-    console.log(data);
-  }
 
   if (data.length > 0) {
     return <DataTableDemo data={data} type={data[0].organisationtype} />;

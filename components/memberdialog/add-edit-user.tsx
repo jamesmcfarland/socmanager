@@ -1,72 +1,65 @@
-
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { getFormSchema } from "../utils/getFormSchema";
 import FormHandler from "./forms/formHandler";
-
-
+import { DefaultUserData, UserData } from "../types/UserData";
 
 interface props {
   type: "add" | "edit";
-  userData?: any;
+  userData?: UserData;
+  organisationType: string;
   dropdown?: boolean;
   id?: string;
 }
 
-export function AddEditUserDialog({ type, userData, }: props) {
+export function AddEditUserDialog({ type, userData, organisationType }: props) {
+  userData = userData || DefaultUserData();
 
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  // });
 
-  const formSchema = getFormSchema(userData.organisationtype)
-
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  });
-
-  async function onSubmit(data: z.infer<typeof formSchema>) {
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
-    //POST the data to /api/organisation/create
-    // try {
-    //   console.log("POSTING");
-    //   const resp = await fetch("/api/organisation/create", {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //   });
-    //   const json = await resp.json();
-    //   toast({
-    //     title: "RX:",
-    //     description: (
-    //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //         <code className="text-white">{JSON.stringify(json, null, 2)}</code>
-    //       </pre>
-    //     ),
-    //   });
-    //   console.log(json.id);
-    // } catch (err) {
-    //   toast({
-    //     title: "ERR",
-    //     description: (
-    //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //         <code className="text-white">{JSON.stringify(err, null, 2)}</code>
-    //       </pre>
-    //     ),
-    //   });
-    // }
-  }
+  // async function onSubmit(data: z.infer<typeof formSchema>) {
+  //   console.log("SUBMITT");
+  // toast({
+  //   title: "You submitted the following values:",
+  //   description: (
+  //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+  //     </pre>
+  //   ),
+  // });
+  //POST the data to /api/organisation/create
+  // try {
+  //   console.log("POSTING");
+  //   const resp = await fetch("/api/organisation/create", {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //   });
+  //   const json = await resp.json();
+  //   toast({
+  //     title: "RX:",
+  //     description: (
+  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //         <code className="text-white">{JSON.stringify(json, null, 2)}</code>
+  //       </pre>
+  //     ),
+  //   });
+  //   console.log(json.id);
+  // } catch (err) {
+  //   toast({
+  //     title: "ERR",
+  //     description: (
+  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //         <code className="text-white">{JSON.stringify(err, null, 2)}</code>
+  //       </pre>
+  //     ),
+  //   });
+  // }
+  // }
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -79,7 +72,11 @@ export function AddEditUserDialog({ type, userData, }: props) {
             : "  Make changes here. Click save when you're done."}
         </DialogDescription>
       </DialogHeader>
-      <FormHandler form={form} onSubmit={onSubmit} type={type} userData={userData} />
+      <FormHandler
+        type={type}
+        userData={userData}
+        organisationType={organisationType}
+      />
     </DialogContent>
   );
 }
