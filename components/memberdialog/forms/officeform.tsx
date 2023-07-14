@@ -11,6 +11,9 @@ const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
+  phoneNumber: z.string().min(2, {
+    message: "Please enter a number",
+  }),
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
@@ -37,6 +40,13 @@ const OfficeForm = ({ userData, type }: { userData: any; type: string }) => {
           placeholder="joe@bloggs.com"
           fieldName="email"
           existingValue={userData?.email}
+        />
+        <QuickFormInput
+          control={form.control}
+          label="Phone Number"
+          placeholder="0123456789"
+          fieldName="phoneNumber"
+          existingValue={userData?.officephonenumber}
         />
 
         <div className="flex justify-end pt-2">
