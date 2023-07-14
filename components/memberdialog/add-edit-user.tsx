@@ -4,45 +4,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import * as z from "zod";
-import QuickFormInput from "../quick-form-input";
-import UniversityForm from "./forms/universityform";
-import OfficeForm from "./forms/officeform";
+
 import FormSwitcher from "./forms/formSwitcher";
 
 interface props {
   type: "add" | "edit";
   userData?: any;
   organisationType: string;
-  dropdown?: boolean;
-  buttonVariant?: string;
-  id?: string;
 }
 
-export function AddEditUserDialog({
-  type,
-  buttonVariant = "default",
-  userData,
-  dropdown = false,
-  organisationType,
-}: props) {
+export function AddEditUserDialog({ type, userData, organisationType }: props) {
   // const form = useForm<z.infer<typeof formSchema>>({
   //   resolver: zodResolver(formSchema),
   // });
