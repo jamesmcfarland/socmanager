@@ -53,12 +53,12 @@ const UniversityForm = ({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      membershipType: "student",
-      course: "",
-      year: 0,
-      studentNumber: "",
-      name: "",
-      email: "",
+      membershipType: userData.universitymembershiptype || "student",
+      course: userData.universitycourse || "",
+      year: userData.universityyear || 0,
+      studentNumber: userData.universitystudentnumber || "",
+      name: userData.name || "",
+      email: userData.email || "",
     },
   });
   async function onSubmit(data: z.infer<typeof FormSchema>) {
