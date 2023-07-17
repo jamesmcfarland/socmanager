@@ -1,5 +1,6 @@
 import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 
 // Get the connection string from the environment variable "SUPABASE_DB_URL"
 const databaseUrl = Deno.env.get("SUPABASE_DB_URL")!;
@@ -8,18 +9,26 @@ const databaseUrl = Deno.env.get("SUPABASE_DB_URL")!;
 const pool = new postgres.Pool(databaseUrl, 3, true);
 
 serve(async (_req) => {
+  if (_req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
+  const data = await _req.json();
   try {
     // Grab a connection from the pool
     const connection = await pool.connect();
-
-    const data = await _req.json();
 
     try {
       if (!data.id) {
         //Adding a new member
         console.log("Adding a new member");
+
+        const date = new Date().toISOString();
+
+        await connection.queryObject`INSERT INTO members (name, email, organisationId, joinDate) VALUES (${data.name}, ${data.email}, ${data.organisationId}, ${date})`;
+
         const result =
-          await connection.queryObject`INSERT INTO members (name, email, organisationId, joinDate) VALUES (${data.name}, ${data.email}, ${data.organisationId}, ${data.joinDate})`;
+          await connection.queryObject`SELECT * FROM members WHERE email = ${data.email} AND organisationId = ${data.organisationId} AND joinDate = ${date}`;
         const member: any = result.rows[0];
 
         switch (data.organisationType) {
@@ -102,6 +111,7 @@ serve(async (_req) => {
     }
   } catch (err) {
     console.error(err);
-    return new Response(String(err?.message ?? err), { status: 500 });
+    console.error(data);
+    return new Response(String(err?.message ?? err), { status: 400 });
   }
 });

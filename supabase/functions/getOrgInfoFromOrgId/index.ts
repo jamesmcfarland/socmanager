@@ -1,5 +1,6 @@
 import * as postgres from "https://deno.land/x/postgres@v0.14.2/mod.ts";
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 
 // Get the connection string from the environment variable "SUPABASE_DB_URL"
 const databaseUrl = Deno.env.get("SUPABASE_DB_URL")!;
@@ -8,6 +9,10 @@ const databaseUrl = Deno.env.get("SUPABASE_DB_URL")!;
 const pool = new postgres.Pool(databaseUrl, 3, true);
 
 serve(async (_req) => {
+  if (_req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
   try {
     // Grab a connection from the pool
     const connection = await pool.connect();
