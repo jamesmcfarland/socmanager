@@ -24,7 +24,7 @@ const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  studentNumber: z.number({
+  studentNumber: z.string({
     required_error: "Please enter a student number.",
   }),
   year: z.number({
@@ -44,14 +44,27 @@ const FormSchema = z.object({
 const UniversityForm = ({
   userData,
   type,
+  submitForm,
 }: {
   userData: any;
   type: string;
+  submitForm?: any;
 }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      membershipType: "student",
+      course: "",
+      year: 0,
+      studentNumber: "",
+      name: "",
+      email: "",
+    },
   });
-  async function onSubmit(data: z.infer<typeof FormSchema>) {}
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+    submitForm(data);
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-2">
@@ -74,6 +87,7 @@ const UniversityForm = ({
           label="Student Number"
           placeholder="12345678"
           fieldName="studentNumber"
+          type="number"
           existingValue={userData?.universitystudentnumber}
         />
         <QuickFormInput
@@ -88,7 +102,7 @@ const UniversityForm = ({
           name="membershipType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Membership Type</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>

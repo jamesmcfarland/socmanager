@@ -14,9 +14,11 @@ import { AddEditUserDialog } from "./add-edit-user";
 const DropdownContainer = ({
   userData,
   organisationType,
+  organisationId,
 }: {
   userData: any;
   organisationType: string;
+  organisationId: string;
 }) => {
   return (
     <Dialog>
@@ -42,6 +44,7 @@ const DropdownContainer = ({
         type="edit"
         userData={userData}
         organisationType={organisationType}
+        organisationId={organisationId}
       />
     </Dialog>
   );

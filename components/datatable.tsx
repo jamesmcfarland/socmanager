@@ -40,9 +40,11 @@ import {
 export function DataTableDemo({
   data,
   organisationType,
+  organisationId,
 }: {
   data: any;
   organisationType: any;
+  organisationId: string;
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -118,6 +120,7 @@ export function DataTableDemo({
         <AddUserDialog
           buttonVariant="default"
           organisationType={organisationType}
+          organisationId={organisationId}
         />
       </div>
       <div className="rounded-md border">

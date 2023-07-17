@@ -6,56 +6,38 @@ import {
 } from "@/components/ui/dialog";
 
 import FormSwitcher from "./forms/formSwitcher";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface props {
   type: "add" | "edit";
   userData?: any;
   organisationType: string;
+  organisationId: string;
 }
 
-export function AddEditUserDialog({ type, userData, organisationType }: props) {
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  // });
+export async function AddEditUserDialog({
+  type,
+  userData,
+  organisationType,
+  organisationId,
+}: props) {
+  const supabase = createClientComponentClient();
 
-  // async function onSubmit(data: z.infer<typeof formSchema>) {
-  //   console.log("SUBMITT");
-  // toast({
-  //   title: "You submitted the following values:",
-  //   description: (
-  //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-  //     </pre>
-  //   ),
-  // });
-  //POST the data to /api/organisation/create
-  // try {
-  //   console.log("POSTING");
-  //   const resp = await fetch("/api/organisation/create", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //   });
-  //   const json = await resp.json();
-  //   toast({
-  //     title: "RX:",
-  //     description: (
-  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //         <code className="text-white">{JSON.stringify(json, null, 2)}</code>
-  //       </pre>
-  //     ),
-  //   });
-  //   console.log(json.id);
-  // } catch (err) {
-  //   toast({
-  //     title: "ERR",
-  //     description: (
-  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //         <code className="text-white">{JSON.stringify(err, null, 2)}</code>
-  //       </pre>
-  //     ),
-  //   });
-  // }
-  // }
+  const submitForm = async (data: any) => {
+    const { data: response, error } = await supabase.functions.invoke(
+      "addOrEditMember",
+      {
+        body: { ...data, organisationId, organisationType },
+      }
+    );
+    if (error) {
+      console.warn(error);
+    }
+    if (response) {
+      console.log(response);
+    }
+  };
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -74,6 +56,7 @@ export function AddEditUserDialog({ type, userData, organisationType }: props) {
           userData={userData}
           organisationType={organisationType}
           type={type}
+          submitForm={submitForm}
         />
       </div>
     </DialogContent>

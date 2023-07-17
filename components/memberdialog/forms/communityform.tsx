@@ -19,11 +19,27 @@ const FormSchema = z.object({
   }),
 });
 
-const CommunityForm = ({ userData, type }: { userData: any; type: string }) => {
+const CommunityForm = ({
+  userData,
+  type,
+  submitForm,
+}: {
+  userData: any;
+  type: string;
+  submitForm: any;
+}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phoneNumber: "",
+    },
   });
-  async function onSubmit(data: z.infer<typeof FormSchema>) {}
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+    submitForm(data);
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-2">

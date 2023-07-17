@@ -22,7 +22,13 @@ const DataTableHandler = async ({
   }
 
   if (data.length > 0) {
-    return <DataTableDemo data={data} organisationType={organisationType} />;
+    return (
+      <DataTableDemo
+        data={data}
+        organisationType={organisationType}
+        organisationId={id}
+      />
+    );
   } else {
     return <div>Data missing</div>;
   }
